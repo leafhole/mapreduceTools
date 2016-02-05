@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/hadoop-0.20.2-cdh3u4-ant.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-0.20.2-cdh3u4-core.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-0.20.2-cdh3u4-examples.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-0.20.2-cdh3u4-test.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-0.20.2-cdh3u4-tools.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-ant-0.20.2-cdh3u4.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-ant.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-core-0.20.2-cdh3u4.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-core.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-examples-0.20.2-cdh3u4.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-examples.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-test-0.20.2-cdh3u4.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-test.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-tools-0.20.2-cdh3u4.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-tools.jar"/>
+	<classpathentry kind="src" path="common"/>
+	<classpathentry kind="src" path="lucene_src"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="lib/annotations.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/rdsegment.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="lib/sdoapi.jar"/>
+	<classpathentry kind="lib" path="lib/sdoutl.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
