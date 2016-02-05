@@ -7,6 +7,14 @@ import java.util.HashMap;
 
 public class Number {
 	@NotNull
+	public static String[] CH_BASE = {
+			"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"
+	};
+	@NotNull
+	public static String[] CH_ADVANCE = {
+			"", "十", "百", "千", "万", "十万", "百万", "千万", "亿"
+	};
+	@NotNull
     private static HashMap number = new HashMap();
 	
 	static {
@@ -16,64 +24,64 @@ public class Number {
 		number.put("四", "4");
 		number.put("五", "5");
 		number.put("六", "6");
-		number.put("七", "7");		
+		number.put("七", "7");
 		number.put("八", "8");
 		number.put("九", "9");
 		number.put("零", "0");
-		
+
 		number.put("壹", "1");
 		number.put("贰", "2");
 		number.put("叁", "3");
 		number.put("肆", "4");
 		number.put("伍", "5");
 		number.put("陆", "6");
-		number.put("柒", "7");		
+		number.put("柒", "7");
 		number.put("捌", "8");
 		number.put("玖", "9");
-		
-		
+
+
 		number.put("1", "1");
 		number.put("2", "2");
 		number.put("3", "3");
 		number.put("4", "4");
 		number.put("5", "5");
 		number.put("6", "6");
-		number.put("7", "7");		
+		number.put("7", "7");
 		number.put("8", "8");
 		number.put("9", "9");
 		number.put("0", "0");
 	}
-	
+
 	public Number() {
 	}
 	
 	@NotNull
-    public static String chineseNumberToArabiaNumber(String chNumber) {
+	public static String chineseNumberToArabiaNumber(String chNumber) {
 		StringBuffer buffer = new StringBuffer();
 		boolean isNumber = false;
 		String value = chNumber;
-		
+
 		for (int j = 0; j < value.length(); ++j) {
 			if (value.length() == 1) {
-				if (value.charAt(j) == '十'||value.charAt(j) =='拾') {
+				if (value.charAt(j) == '十' || value.charAt(j) == '拾') {
 					buffer.append("10");
 					isNumber = true;
 					continue;
 				}
 			}
-			
-			if (j == 0 && (value.charAt(j) == '十'||value.charAt(j) =='拾')) {
+
+			if (j == 0 && (value.charAt(j) == '十' || value.charAt(j) == '拾')) {
 				buffer.append("1");
-			} else if (j == value.length() - 1 && (value.charAt(j) == '十'||value.charAt(j) == '拾')) {
+			} else if (j == value.length() - 1 && (value.charAt(j) == '十' || value.charAt(j) == '拾')) {
 				buffer.append("0");
-			} else if (j == value.length() - 1 && (value.charAt(j) == '百'||value.charAt(j) == '佰')) {
+			} else if (j == value.length() - 1 && (value.charAt(j) == '百' || value.charAt(j) == '佰')) {
 				buffer.append("00");
-			} else  {						
+			} else {
 				String nb = String.valueOf(value.charAt(j));
 				if (number.containsKey(nb)) {
 					buffer.append(number.get(nb));
 					isNumber = true;
-				} else if (value.charAt(j) == '十' || value.charAt(j) == '百'||value.charAt(j) == '拾'||value.charAt(j) == '佰') {
+				} else if (value.charAt(j) == '十' || value.charAt(j) == '百' || value.charAt(j) == '拾' || value.charAt(j) == '佰') {
 					continue;
 				} else {
 					isNumber = false;
@@ -81,22 +89,12 @@ public class Number {
 				}
 			}
 		}
-		
-		if (isNumber) 		
+
+		if (isNumber)
 			return buffer.toString();
-		else 
+		else
 			return "";
 	}
-	
-	@NotNull
-    public static String[] CH_BASE = {
-		"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"
-	};
-	
-	@NotNull
-    public static String[] CH_ADVANCE = {
-		"", "十", "百", "千", "万", "十万", "百万", "千万", "亿"
-	};
 	
 	@NotNull
     public static String arabiaNumberToChineseNumber(@NotNull String number) {
@@ -283,7 +281,7 @@ public class Number {
 		if(args.length>=1)
 		{
 			System.out.println("read:"+args[0]);
-			String content = CommonLib.readFile(args[0]);
+			String content = "";
 			String[] lines = content.split("\n");
 			String trans = null;
 			for(int i=0;i<lines.length;i++)

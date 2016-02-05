@@ -89,9 +89,10 @@ package common.lib;
 //
 // Imports
 //
+
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.IOException;
 
 
 //
@@ -306,6 +307,87 @@ public class MD5
 	return(lngA);
   }
 
+  //
+  // MAIN routine with test data set
+  //
+  public static void main(String args[])
+          throws IOException {
+
+    String strTestData;
+    char chrTestData[] = new char[64];
+    char chrTestBuffer[] = new char[1000];
+    MD5 md5Test = new MD5();
+
+    strTestData = new String("");
+    chrTestData = strTestData.toCharArray();
+    md5Test.update(chrTestData, chrTestData.length);
+    md5Test.md5final();
+    System.out.println("MD5 (" + strTestData + ") = " + md5Test.toHexString());
+
+    md5Test.init();
+    strTestData = new String("a");
+    chrTestData = strTestData.toCharArray();
+    md5Test.update(chrTestData, chrTestData.length);
+    md5Test.md5final();
+    System.out.println("MD5 (" + strTestData + ") = " + md5Test.toHexString());
+
+    md5Test.init();
+    strTestData = new String("abc");
+    chrTestData = strTestData.toCharArray();
+    md5Test.update(chrTestData, chrTestData.length);
+    md5Test.md5final();
+    System.out.println("MD5 (" + strTestData + ") = " + md5Test.toHexString());
+
+    md5Test.init();
+    strTestData = new String("我国人民");
+    chrTestData = strTestData.toCharArray();
+    md5Test.update(chrTestData, chrTestData.length);
+    md5Test.md5final();
+    System.out.println("MD5 (" + strTestData + ") = " + md5Test.toHexString());
+
+    md5Test.init();
+    strTestData = new String("abcdefghijklmnopqrstuvwxyz");
+    chrTestData = strTestData.toCharArray();
+    md5Test.update(chrTestData, chrTestData.length);
+    md5Test.md5final();
+    System.out.println("MD5 (" + strTestData + ") = " + md5Test.toHexString());
+
+    md5Test.init();
+    strTestData = new String("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    chrTestData = strTestData.toCharArray();
+    md5Test.update(chrTestData, chrTestData.length);
+    md5Test.md5final();
+    System.out.println("MD5 (" + strTestData + ") = " + md5Test.toHexString());
+
+    md5Test.init();
+    strTestData = new String("12345678901234567890123456789012345678901234567890123456789012345678901234567890");
+    chrTestData = strTestData.toCharArray();
+    md5Test.update(chrTestData, chrTestData.length);
+    md5Test.md5final();
+    System.out.println("MD5 (" + strTestData + ") = " + md5Test.toHexString());
+
+
+    for (int i = 0; i < chrTestBuffer.length; ++i) {
+      chrTestBuffer[i] = (char) (i & 0xff);
+    }
+
+    long time1 = System.currentTimeMillis();
+    String crtest = "";
+    md5Test.init();
+    char[] achar = crtest.toCharArray();
+    for (int i = 0; i < 5000; ++i) {
+      //md5Test.update(chrTestBuffer,chrTestBuffer.length);
+      //md5Test.update(achar,achar.length);
+
+      MD5 md5 = new MD5();
+      md5.update(achar, achar.length);
+      md5.md5final();
+    }
+    //md5Test.md5final();
+    long time2 = (System.currentTimeMillis() - time1) / 1000;
+    System.out.println("MD5 Speed Test: " + time2 + "sec = " + md5Test.toHexString());
+
+  }
 
   public void update(char bytInput[], long lngLen)
   {
@@ -313,21 +395,20 @@ public class MD5
     int i = 0;
     this.lngByteCount += lngLen;
     int partLen = 64 - index;
-    
-    if (lngLen >= partLen) 
+
+    if (lngLen >= partLen)
     {
-      for (int j = 0; j < partLen; ++j) 
+      for (int j = 0; j < partLen; ++j)
       {
-        this.bytBuffer[j + index] = bytInput[j]; 
+        this.bytBuffer[j + index] = bytInput[j];
       }
       transform (this.lngState, this.bytBuffer);
 
       for (i = partLen; i + 63 < lngLen; i += 64)
       {
-      	for (int j = 0; j<64; ++j) 
-      	{
-          this.bytBuffer[j] = bytInput[j+i]; 
-        }	
+        for (int j = 0; j < 64; ++j) {
+          this.bytBuffer[j] = bytInput[j + i];
+        }
         transform (this.lngState, this.bytBuffer);
       }
       index = 0;
@@ -337,11 +418,10 @@ public class MD5
       i = 0;
     }
 
-    for (int j = 0; j < lngLen - i; ++j) 
-    {  
+    for (int j = 0; j < lngLen - i; ++j) {
       this.bytBuffer[index + j] = bytInput[i + j];
     }
-    
+
   }
 
   public void md5final()
@@ -349,7 +429,7 @@ public class MD5
     char bytBits[] = new char[8];
     int index, padLen;
     long bits = this.lngByteCount * 8;
-    
+
     bytBits[0] = (char) (bits & 0xffL);
     bytBits[1] = (char) ((bits >>> 8) & 0xffL);
     bytBits[2] = (char) ((bits >>> 16) & 0xffL);
@@ -358,7 +438,7 @@ public class MD5
     bytBits[5] = (char)((bits >>> 40) & 0xffL);
     bytBits[6] = (char)((bits >>> 48) & 0xffL);
     bytBits[7] = (char)((bits >>> 56) & 0xffL);
- 
+
     index = (int) this.lngByteCount%64;
     if (index < 56 )
     {
@@ -369,7 +449,7 @@ public class MD5
       padLen = 120 - index;
     }
     update(pad, padLen);
-    update(bytBits, 8);	    
+    update(bytBits, 8);
 
   }
 
@@ -389,7 +469,7 @@ public class MD5
          }
          else
          {
-           mystring.append(Long.toHexString(myByte)); 
+           mystring.append(Long.toHexString(myByte));
          }
       }
     }
@@ -403,92 +483,5 @@ public class MD5
   	this.lngState[1] = 0xefcdab89L;
   	this.lngState[2] = 0x98badcfeL;
   	this.lngState[3] = 0x10325476L;
-  }
-
-
-
-  //
-  // MAIN routine with test data set
-  //
-  public static void main (String args [])
-       throws IOException
-  {
-
-    String strTestData;
-    char chrTestData[] = new char[64];
-    char chrTestBuffer[] = new char[1000];
-    MD5 md5Test = new MD5();
-
-    strTestData = new String("");
-    chrTestData = strTestData.toCharArray();    
-    md5Test.update(chrTestData,chrTestData.length);    
-    md5Test.md5final();
-    System.out.println("MD5 (" + strTestData +") = " + md5Test.toHexString() );
-
-    md5Test.init();
-    strTestData = new String("a");
-    chrTestData = strTestData.toCharArray();    
-    md5Test.update(chrTestData,chrTestData.length);    
-    md5Test.md5final();
-    System.out.println("MD5 (" + strTestData +") = " + md5Test.toHexString() );
-  
-    md5Test.init();
-    strTestData = new String("abc");
-    chrTestData = strTestData.toCharArray();    
-    md5Test.update(chrTestData,chrTestData.length);    
-    md5Test.md5final();
-    System.out.println("MD5 (" + strTestData +") = " + md5Test.toHexString() );
-
-    md5Test.init();
-    strTestData = new String("我国人民");
-    chrTestData = strTestData.toCharArray();    
-    md5Test.update(chrTestData,chrTestData.length);    
-    md5Test.md5final();
-    System.out.println("MD5 (" + strTestData +") = " + md5Test.toHexString() );
-
-    md5Test.init();
-    strTestData = new String("abcdefghijklmnopqrstuvwxyz");
-    chrTestData = strTestData.toCharArray();    
-    md5Test.update(chrTestData,chrTestData.length);    
-    md5Test.md5final();
-    System.out.println("MD5 (" + strTestData +") = " + md5Test.toHexString() );
-
-    md5Test.init();
-    strTestData = new String("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-    chrTestData = strTestData.toCharArray();    
-    md5Test.update(chrTestData,chrTestData.length);    
-    md5Test.md5final();
-    System.out.println("MD5 (" + strTestData +") = " + md5Test.toHexString() );
-
-    md5Test.init();
-    strTestData = new String("12345678901234567890123456789012345678901234567890123456789012345678901234567890");
-    chrTestData = strTestData.toCharArray();    
-    md5Test.update(chrTestData,chrTestData.length);    
-    md5Test.md5final();
-    System.out.println("MD5 (" + strTestData +") = " + md5Test.toHexString() );
-
-
-    for (int i = 0; i < chrTestBuffer.length; ++i)
-    {
-    	chrTestBuffer[i] = (char) (i & 0xff);
-    }
-
-    long time1 = System.currentTimeMillis();
-    String crtest = CommonLib.readFile("d:/work/create_mssql_new.sql");
-    md5Test.init();
-    char[] achar = crtest.toCharArray();
-    for (int i = 0; i < 5000; ++i) 
-    {
-      //md5Test.update(chrTestBuffer,chrTestBuffer.length);    	
-    	//md5Test.update(achar,achar.length);
-    	
-    	MD5 md5 = new MD5();		    
-		md5.update(achar,achar.length);    
-		md5.md5final();
-    }
-    //md5Test.md5final();
-    long time2 = (System.currentTimeMillis() - time1)/1000;
-    System.out.println("MD5 Speed Test: " + time2 + "sec = " + md5Test.toHexString() );
-
   }
 }

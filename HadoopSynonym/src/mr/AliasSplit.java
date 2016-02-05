@@ -1,9 +1,5 @@
 package mr;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.util.StringUtils;
@@ -11,11 +7,13 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-import format.MRUtils;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class AliasSplit {
-	private static final Log log = LogFactory.getLog(SynonymRun.class);
+	private static final Log log = LogFactory.getLog(AliasSplit.class);
 
 	public AliasSplit() {
 		// TODO Auto-generated constructor stub
