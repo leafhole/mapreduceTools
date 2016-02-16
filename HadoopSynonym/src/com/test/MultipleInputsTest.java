@@ -12,13 +12,15 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Reducer.Context;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
+/*
+* 这个文件是为了测试多路输入的,使用了MultipleInputs方法
+*
+* */
 
 public class MultipleInputsTest {
 
@@ -28,33 +30,12 @@ public class MultipleInputsTest {
         BufferedReader reader = null;  
         List<String> lines = new ArrayList<String>(); //简单测试，没有任何业务逻辑  
           
-//        public void setup(Context context) throws IOException  
-//        {  
-//        	String[] filenames = {"test_upload_file", "test_upload_file2"};
-//        	for(String filename: filenames) {
-//        		FileReader fr = new FileReader(filename);  //必须和上传文件名一致  
-//        		reader = new BufferedReader(fr);  
-//
-//        		String line = null;  
-//        		while((line = reader.readLine()) != null)  
-//        			lines.add(line);  
-//        		System.out.println(lines);  
-//        	}
-//        }  
+
         @Override  
         public void map(LongWritable key, Text value, Context context)throws IOException, InterruptedException  
-        {  
-//            for(String line:lines)  
-//                context.write(new Text("key"),new Text(line));  
-//        	value = transformTextToUTF8(value, "gbk");
-//        	System.out.println(value.encode("gbk").toString());
-//        	System.out.println(value.toString());
-//        	System.out.println(value.);
-
+        {
         	String line = value.toString();
-        	if (line.contains("repcaptm")) {
-        		return;
-        	}
+
         	String[] words = line.split("CITY");
         	if (words.length >=2) {
         		System.out.println(value.toString());
@@ -64,8 +45,6 @@ public class MultipleInputsTest {
         	}  else {
         		return;
         	}
-        	
-
         }  
     }  
       
